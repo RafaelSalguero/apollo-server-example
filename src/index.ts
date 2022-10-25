@@ -16,4 +16,4 @@ const { url } = await startStandaloneServer(server, {
     listen: { port },
 });
 
-console.log("Server is up at " + port);
+console.log(`Server is up at http://localhost:${port}/graphiql`);
