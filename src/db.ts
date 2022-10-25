@@ -1,4 +1,4 @@
-import { Author, Book, Genre, Language } from "./generated/graphql.js";
+import { Author, Book, BookInput, Genre, Language } from "./generated/graphql.js";
 
 export const authors: Omit<Author, "books">[] = [
     {
@@ -23,7 +23,7 @@ export const languages: Omit<Language, "books">[] = [
     }
 ]
 
-export const books: Book[] = [
+export let books: Book[] = [
     {
         id: "1",
         title: "To kill a mockingbird",
@@ -45,3 +45,14 @@ export const books: Book[] = [
         languages: [languages[0] as Language]
     }
 ]
+
+export function createBook(input: BookInput) {
+    const newBook: Book = {
+        ...input,
+        id: (books.length + 1).toString(),
+        author: authors.filter(x => x.id == input.author)[0] as Author,
+        languages: input.languages.map(id => languages.filter(x => x.id == id)[0] as Language)
+    }
+    books.push(newBook);
+    return newBook;
+}
